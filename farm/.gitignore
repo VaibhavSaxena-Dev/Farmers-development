@@ -1,6 +1,7 @@
 # ========================
 # Environment Variables
 # ========================
+docs/
 *.md
 .env
 .env.local
