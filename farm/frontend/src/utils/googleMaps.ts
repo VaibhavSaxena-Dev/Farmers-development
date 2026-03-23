@@ -1,7 +1,7 @@
 // Google Maps Configuration
 export const GOOGLE_MAPS_CONFIG = {
   // Get your API key from: https://console.cloud.google.com/
-  API_KEY: process.env.VITE_GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY',
+  API_KEY: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'YOUR_GOOGLE_MAPS_API_KEY',
   
   // Default map settings
   DEFAULT_CENTER: {
