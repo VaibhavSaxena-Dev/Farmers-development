@@ -59,3 +59,7 @@ if __name__ == '__main__':
     print("Starting Chicken Disease Prediction API...")
     print("Model loaded successfully!")
     app.run(host='0.0.0.0', port=5000, debug=False, use_reloader=False)
+
+@app.route("/")
+def home():
+    return "ML service is running successfully!"
