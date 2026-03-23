@@ -1,0 +1,4 @@
+pythonenv/
+node_modules/
+__pycache__/
+*.h5

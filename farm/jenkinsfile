@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone') {
+            steps {
+                git branch: 'development', url: 'https://github.com/ShaliniNettam/Farmers.git'
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh '''
+                cd farm/backend
+                docker build -t farm-backend:latest .
+
+                cd ../frontend
+                docker build -t farm-frontend:latest .
+                '''
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                cd farm
+                docker-compose down
+                docker-compose up -d --build
+                '''
+            }
+        }
+
+    }
+}
+

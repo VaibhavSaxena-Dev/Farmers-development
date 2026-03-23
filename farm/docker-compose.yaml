@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: farm-backend
+    restart: always
+    ports:
+      - "5002:5002"
+    env_file:
+      - .env
+    networks:
+      - farm-network
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: "http://16.176.157.113:5002/api"
+    container_name: farm-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - farm-network
+
+networks:
+  farm-network:
+    driver: bridge
+
