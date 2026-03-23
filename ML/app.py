@@ -13,7 +13,7 @@ from PIL import Image
 import io
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins='*')
 
 # Load model
 model = tf.keras.models.load_model('chicken_disease_model.h5')
