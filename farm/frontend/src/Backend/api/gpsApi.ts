@@ -1,7 +1,8 @@
 // GPS Tracking API
 
+import { API_BASE_URL } from '../../config/env';
 // Import API configuration from todoApi
-const API_BASE = '/api'; // Use proxy for development
+const API_BASE = API_BASE_URL;
 
 // Get auth token from localStorage
 const getAuthToken = () => {

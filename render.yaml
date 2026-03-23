@@ -1,0 +1,33 @@
+services:
+  # Main Backend API (Node/Express)
+  - type: web
+    name: farm-backend
+    env: node
+    path: farm/backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+    
+  # Frontend (Static Vite+React)
+  - type: web
+    name: farm-frontend
+    env: static
+    path: farm/frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    
+  # ML Disease Prediction (Python/Flask)
+  - type: web
+    name: farm-ml
+    env: python
+    path: ML
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+

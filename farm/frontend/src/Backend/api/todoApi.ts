@@ -13,7 +13,8 @@ interface TodoResponse {
 }
 
 // API for todo operations using HTTP requests to backend
-const API_BASE = '/api'; // Use proxy for development
+import { API_BASE_URL } from '../../config/env';
+const API_BASE = API_BASE_URL;
 // Get auth token from localStorage
 const getAuthToken = () => {
   return localStorage.getItem('authToken');

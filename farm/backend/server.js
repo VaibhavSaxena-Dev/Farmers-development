@@ -4,7 +4,10 @@ const path = require('path');
 const fs = require('fs');
 
 // Load environment variables
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+// Load .env from backend dir first, fallback to parent dir
+if (!require('dotenv').config({ path: path.resolve(__dirname, '.env') }).parsed) {
+  require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+}
 
 // Import database connection
 const connectDB = require('./config/db');
@@ -44,9 +47,10 @@ if (!process.env.JWT_SECRET) {
 
 // Middleware
 app.use(cors({
-  origin: ["http://16.176.157.113", "http://localhost:8083", "http://localhost:8084", "http://localhost:8085", "http://localhost:8086", "http://127.0.0.1:8083", "http://127.0.0.1:8084", "http://127.0.0.1:8085", "http://127.0.0.1:8086"],
+  origin: process.env.CLIENT_ORIGINS ? process.env.CLIENT_ORIGINS.split(',') : true,
   credentials: true,
 }));
+
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -113,13 +117,14 @@ const startServer = async () => {
     // Start notification scheduler
     notificationService.startScheduler();
     
-    app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Server running on port ${PORT}`);
       console.log(`📱 Client origin: ${CLIENT_ORIGIN}`);
       console.log(`🔊 Voice announcements: Enabled`);
       console.log(`📅 Notifications: Enabled`);
-      console.log(`🌐 Health check: http://localhost:${PORT}/health`);
+      console.log(`🌐 Health check: http://${process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost'}:${PORT}/health`);
     });
+
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);

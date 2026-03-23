@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Upload, Camera, AlertCircle, Clipboard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { ML_BASE_URL } from '@/config/env';
 
 const diseaseKeyMap: Record<string, string> = {
   'Healthy': 'diseaseHealthy',
@@ -70,7 +71,7 @@ const DiseaseDetection: React.FC = () => {
       const formData = new FormData();
       formData.append('image', blob, 'chicken.jpg');
 
-      const response = await fetch('http://localhost:5000/predict', {
+      const response = await fetch(`${ML_BASE_URL}/predict`, {
         method: 'POST',
         body: formData,
       });
@@ -199,3 +200,4 @@ const DiseaseDetection: React.FC = () => {
 };
 
 export default DiseaseDetection;
+
